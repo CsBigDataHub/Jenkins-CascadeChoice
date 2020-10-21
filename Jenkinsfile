@@ -31,7 +31,7 @@ return """
 
 def createList(String listName){
        return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: 'SelectedCategories', 
-        script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script:  categories]]]
+        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  categories]]]
 }
 // Properties step to set the Active choice parameters via 
 // Declarative Scripting
