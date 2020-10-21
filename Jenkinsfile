@@ -32,10 +32,10 @@ return """
 // Declarative Scripting
 properties([
     parameters([
-        [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT',   name: 'Categories', 
+        [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: 'SelectedCategories', 
         script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script:  categories]]],
 
-        [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: 'Items', referencedParameters: 'Categories', 
+        [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: 'SelectedItems', referencedParameters: 'SelectedCategories', 
         script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script: items]]]
     ])
 ])
@@ -46,7 +46,7 @@ pipeline {
 
         stage("first stage"){
             steps {
-                echo "welcome to the ${Categories}"
+                echo "welcome to the ${SelectedCategories}"
 
             }
         
@@ -54,7 +54,7 @@ pipeline {
 
         stage("Second stage"){
             steps {
-                echo "bye bye world ${Items}"
+                echo "bye bye world ${SelectedItems}"
 
             }
         
