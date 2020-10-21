@@ -31,7 +31,7 @@ String populateItems(List default_item, List vegetablesList, List fruitsList){
 
 def createChoice(String name, String data){
        return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: name, 
-        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  categories]]]
+        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  data]]]
 }
 
 def createCascadeChoice(String name, String refName, String script){
