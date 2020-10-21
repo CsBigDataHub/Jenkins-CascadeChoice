@@ -29,7 +29,7 @@ return """
      """
 }
 
-def createList(String listName){
+def createList(String listName, String categories){
        return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: 'SelectedCategories', 
         script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  categories]]]
 }
@@ -37,7 +37,7 @@ def createList(String listName){
 // Declarative Scripting
 properties([
     parameters([
-        createList("SelectedCategories")
+        createList("SelectedCategories", categories)
         ,
         [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: 'SelectedItems', referencedParameters: 'SelectedCategories', 
         script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script: items]]]
