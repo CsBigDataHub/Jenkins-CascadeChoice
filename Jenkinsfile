@@ -46,7 +46,7 @@ pipeline {
 
         stage("first stage"){
             steps {
-                echo "welcome to the world"
+                echo "welcome to the ${Categories}"
 
             }
         
@@ -54,7 +54,7 @@ pipeline {
 
         stage("Second stage"){
             steps {
-                echo "bye bye world"
+                echo "bye bye world ${Items}"
 
             }
         
