@@ -14,23 +14,30 @@ String buildScript(List values){
   return "return $values"
 }
 
-// String items = populateItems(default_item,vegetables_list,fruits_list)
+String items = populateItems(default_item,vegetables_list,fruits_list)
 
-// String populateItems(List default_item, List vegetablesList, List fruitsList){
-//     return """
-//         if(SelectedCategories.equals('Vegetables')){
-//             return $vegetablesList
-//         }
-//         else if(SelectedCategories.equals('Fruits')){
-//             return $fruitsList
-//         }else{
-//             return $default_item
-//         }
-//         """
-// }
+String populateItems(List default_item, List vegetablesList, List fruitsList){
+    return """
+        if(SelectedCategories.equals('Vegetables')){
+            return $vegetablesList
+        }
+        else if(SelectedCategories.equals('Fruits')){
+            return $fruitsList
+        }else{
+            return $default_item
+        }
+        """
+}
 
-String items = addCondition("SelectedCategories","Vegetables", vegetables_list) + addCondition("SelectedCategories","Fruits", fruits_list)
+def createChoice(String name, String data){
+       return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: name, 
+        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  categories]]]
+}
 
+def createCascadeChoice(String name, String refName, String script){
+       [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: name, referencedParameters: refName, 
+        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script: script]]]
+}
 
 
 
@@ -43,23 +50,9 @@ properties([
 ])
 
 
-def createChoice(String name, String data){
-       return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: name, 
-        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script:  categories]]]
-}
 
-def createCascadeChoice(String name, String refName, String script){
-       [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: name, referencedParameters: refName, 
-        script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: 'return ["ERROR"]'], script: [classpath: [], sandbox: false, script: script]]]
-}
 
-String addCondition(String choiceName, String value, List dataToRetrun){
-    return """
-         if($choiceName.equals($value)){
-            return $dataToRetrun
-        }
-    """
-}
+
 
 
 pipeline {
