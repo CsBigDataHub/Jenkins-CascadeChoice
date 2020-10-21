@@ -18,23 +18,27 @@ String buildScript(List values){
 }
 String populateItems(List default_item, List vegetablesList, List fruitsList){
 return """
-     if(Categories.equals('Vegetables')){
+     if(SelectedCategories.equals('Vegetables')){
         return $vegetablesList
      }
-     else if(Categories.equals('Fruits')){
+     else if(SelectedCategories.equals('Fruits')){
         return $fruitsList
      }else{
         return $default_item
      }
      """
 }
+
+def createList(String listName){
+       return [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: 'SelectedCategories', 
+        script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script:  categories]]]
+}
 // Properties step to set the Active choice parameters via 
 // Declarative Scripting
 properties([
     parameters([
-        [$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', name: 'SelectedCategories', 
-        script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script:  categories]]],
-
+        createList("SelectedCategories")
+        ,
         [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT',name: 'SelectedItems', referencedParameters: 'SelectedCategories', 
         script: [$class: 'GroovyScript', fallbackScript: onError, script: [classpath: [], sandbox: false, script: items]]]
     ])
