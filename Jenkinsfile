@@ -44,7 +44,7 @@ def createCascadeChoice(String name, String refName, String script){
 
 properties([
     parameters([
-        createList("SelectedCategories", categories),
+        createChoice("SelectedCategories", categories),
         createCascadeChoice("SelectedItems", "SelectedCategories", items)
     ])
 ])
